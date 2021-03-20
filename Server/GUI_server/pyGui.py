@@ -68,11 +68,12 @@ class Ui_Dialog(object):
 "  border: 5px solid #2E3349;\n"
 "  radius: 8px;\n"
 "  border-radius: 8px;\n"
+"  selection-color: white;\n"
+"  selection-background-color: #2E3349;\n"
+"  outline: none;\n"
+"  \n"
 "}\n"
-"QListView::item:hover,\n"
-"QListView::item:disabled:hover,\n"
-"QListView::item:hover:!active,\n"
-"{background: transparent;}\n"
+"\n"
 "\n"
 "")
         self.roomsDropDown.setEditable(False)
@@ -214,7 +215,6 @@ class Ui_Dialog(object):
         self.ipLabel.setText(_translate("Dialog", "IP:"))
         self.portLabel.setText(_translate("Dialog", "Port:"))
         self.startBtn.setText(_translate("Dialog", "START"))
-import res_rc
 
 
 if __name__ == "__main__":
