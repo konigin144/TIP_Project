@@ -1,1 +1,7 @@
+Kompilacja GUI
+
 pyuic5 -x serverGui.ui -o pyGui.py
+
+Kompilacja RC
+
+pyrcc5 res.qrc -o res_rc.py

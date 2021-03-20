@@ -215,7 +215,7 @@ class Ui_Dialog(object):
         self.ipLabel.setText(_translate("Dialog", "IP:"))
         self.portLabel.setText(_translate("Dialog", "Port:"))
         self.startBtn.setText(_translate("Dialog", "START"))
-
+import res_rc
 
 if __name__ == "__main__":
     import sys
