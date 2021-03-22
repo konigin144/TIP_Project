@@ -254,7 +254,7 @@ class Ui_Dialog(object):
         self.portLabel.setText(_translate("Dialog", "Port:"))
         self.startBtn.setText(_translate("Dialog", "START"))
 
-    def handleClick(self):
+    def handleClick(self): #Tych stylów nie można przenieść bo one są dynamicznie dodawane na kliknięcie
         if self.isActive == False:
             self.startTh()
             self.isActive = True
