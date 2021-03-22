@@ -43,120 +43,130 @@ class Ui_Dialog(object):
         Dialog.setSizePolicy(sizePolicy)
         Dialog.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         Dialog.setLayoutDirection(QtCore.Qt.LeftToRight)
-        Dialog.setStyleSheet("background-color: rgb(24, 30, 54)\n"
-"")
+        Dialog.setStyleSheet("background-color: rgb(24, 30, 54)\n""")
+        Dialog.setFixedSize(Dialog.size())
+        Dialog.setWindowFlag(QtCore.Qt.WindowMinimizeButtonHint, True)
+        Dialog.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, False)
+
         self.layoutWidget = QtWidgets.QWidget(Dialog)
         self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 581, 781))
         self.layoutWidget.setObjectName("layoutWidget")
+       
         self.contentLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
         self.contentLayout.setContentsMargins(0, 0, 0, 0)
         self.contentLayout.setObjectName("contentLayout")
+        
         self.roomsDropDown = QtWidgets.QComboBox(self.layoutWidget)
         self.roomsDropDown.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.roomsDropDown.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.roomsDropDown.setStyleSheet("QComboBox{\n"
-"    font: 8pt \"Segoe UI Emoji\";\n"
-"    padding-left: 10px;\n"
-"    background-color: #252A40;\n"
-"    border: 5px solid #2E3349;\n"
-"    color: white;\n"
-"    radius: 8px;\n"
-"    border-radius: 8px;\n"
-"     selection-background-color: #2E334;\n"
-"}\n"
-"\n"
-"QComboBox::drop-down {\n"
-"    color: white;\n"
-"    background-color: #252A40;\n"
-"    border: 0px;\n"
-"}\n"
-"\n"
-"QComboBox::down-arrow {\n"
-"   image: url(:/images/dropdown.png);\n"
-"   width: 14px;\n"
-"   height: 14px;\n"
-"   padding-right: 10px;\n"
-"   border: 0;\n"
-"}\n"
-"\n"
-"QComboBox::down-arrow:on { /* shift the arrow when popup is open */\n"
-"     image: url(:/images/dropdown_on.png);\n"
-"}\n"
-"QListView{\n"
-"  margin-top: 10px;\n"
-"  color: #fff;\n"
-"  border: 5px solid #2E3349;\n"
-"  radius: 8px;\n"
-"  border-radius: 8px;\n"
-"  selection-color: white;\n"
-"  selection-background-color: #2E3349;\n"
-"  outline: none;\n"
-"  \n"
-"}\n"
-"\n"
-"\n"
-"")
+                "    font: 8pt \"Segoe UI Emoji\";\n"
+                "    padding-left: 10px;\n"
+                "    background-color: #252A40;\n"
+                "    border: 5px solid #2E3349;\n"
+                "    color: white;\n"
+                "    radius: 8px;\n"
+                "    border-radius: 8px;\n"
+                "     selection-background-color: #2E334;\n"
+                "}\n"
+                "\n"
+                "QComboBox::drop-down {\n"
+                "    color: white;\n"
+                "    background-color: #252A40;\n"
+                "    border: 0px;\n"
+                "}\n"
+                "\n"
+                "QComboBox::down-arrow {\n"
+                "   image: url(:/images/dropdown.png);\n"
+                "   width: 14px;\n"
+                "   height: 14px;\n"
+                "   padding-right: 10px;\n"
+                "   border: 0;\n"
+                "}\n"
+                "\n"
+                "QComboBox::down-arrow:on { /* shift the arrow when popup is open */\n"
+                "     image: url(:/images/dropdown_on.png);\n"
+                "}\n"
+                "QListView{\n"
+                "  margin-top: 10px;\n"
+                "  color: #fff;\n"
+                "  border: 5px solid #2E3349;\n"
+                "  radius: 8px;\n"
+                "  border-radius: 8px;\n"
+                "  selection-color: white;\n"
+                "  selection-background-color: #2E3349;\n"
+                "  outline: none;\n"
+                "  cursor: pointer;\n"
+                "  \n"
+                "}\n""")
         self.roomsDropDown.setEditable(False)
         self.roomsDropDown.setObjectName("roomsDropDown")
         self.roomsDropDown.addItem("")
         self.roomsDropDown.addItem("")
         self.roomsDropDown.addItem("")
+        self.roomsDropDown.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.roomsDropDown.view().setCursor(QCursor(QtCore.Qt.PointingHandCursor)) # Set pointer to the content of dropdown  
         self.contentLayout.addWidget(self.roomsDropDown)
+        
         self.logsArea = QtWidgets.QTextBrowser(self.layoutWidget)
         self.logsArea.setStyleSheet("QTextBrowser#logsArea\n"
-"{\n"
-"    background-color: #252A40;\n"
-"    radius: 8px;\n"
-"    border-radius: 8px;\n"
-"    border: 5px solid #2E3349;\n"
-"}\n"
-"\n"
-"")
+                "{\n"
+                "    background-color: #252A40;\n"
+                "    radius: 8px;\n"
+                "    border-radius: 8px;\n"
+                "    border: 5px solid #2E3349;\n"
+                "    color: #2EFB22;\n"
+                "    font-family: Consolas;\n"
+                "}\n""")
         self.logsArea.setObjectName("logsArea")
         self.contentLayout.addWidget(self.logsArea)
+        
         self.bottomLayout = QtWidgets.QFormLayout()
         self.bottomLayout.setObjectName("bottomLayout")
+        
         self.inputsLayout = QtWidgets.QGridLayout()
         self.inputsLayout.setObjectName("inputsLayout")
+        
         self.ipLayout = QtWidgets.QFormLayout()
         self.ipLayout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
         self.ipLayout.setObjectName("ipLayout")
+        
         self.ipLabel = QtWidgets.QLabel(self.layoutWidget)
         self.ipLabel.setMinimumSize(QtCore.QSize(40, 20))
         self.ipLabel.setMaximumSize(QtCore.QSize(40, 20))
         self.ipLabel.setStyleSheet("QLabel{\n"
-"    font: 8pt \"Segoe UI Emoji\";\n"
-"    color: #fff;\n"
-"    font-size: 14px;\n"
-"    text-align: left;\n"
-"    margin-left: -200px;    \n"
-"}\n"
-"")
+                "    font: 8pt \"Segoe UI Emoji\";\n"
+                "    color: #fff;\n"
+                "    font-size: 14px;\n"
+                "    text-align: left;\n"
+                "    margin-left: -200px;\n"
+                "}\n""")
         self.ipLabel.setObjectName("ipLabel")
         self.ipLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.ipLabel)
+        
         self.ipInput = QtWidgets.QLineEdit(self.layoutWidget)
         self.ipInput.setMinimumSize(QtCore.QSize(150, 20))
         self.ipInput.setMaximumSize(QtCore.QSize(150, 20))
         self.ipInput.setToolTip("")
         self.ipInput.setStyleSheet("QLineEdit{\n"
-"    color: #fff;\n"
-"    padding-left: 10px;\n"
-"    font: 8pt \"Segoe UI Emoji\";\n"
-"    border: 2px solid;\n"
-"    border-color: #2E3349;\n"
-"    border-radius: 8px;\n"
-"    background: #252A40;\n"
-"}\n"
-"\n"
-"")
+                "    color: #fff;\n"
+                "    padding-left: 10px;\n"
+                "    font: 8pt \"Segoe UI Emoji\";\n"
+                "    border: 2px solid;\n"
+                "    border-color: #2E3349;\n"
+                "    border-radius: 8px;\n"
+                "    background: #252A40;\n"
+                "}\n""")
         self.ipInput.setObjectName("ipInput")
         self.ipLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.ipInput)
         self.inputsLayout.addLayout(self.ipLayout, 0, 0, 1, 1)
+        
         self.portLayout = QtWidgets.QFormLayout()
         self.portLayout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
         self.portLayout.setFieldGrowthPolicy(QtWidgets.QFormLayout.AllNonFixedFieldsGrow)
         self.portLayout.setRowWrapPolicy(QtWidgets.QFormLayout.DontWrapRows)
         self.portLayout.setObjectName("portLayout")
+        
         self.portLabel = QtWidgets.QLabel(self.layoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -166,66 +176,68 @@ class Ui_Dialog(object):
         self.portLabel.setMinimumSize(QtCore.QSize(40, 20))
         self.portLabel.setMaximumSize(QtCore.QSize(40, 20))
         self.portLabel.setStyleSheet("QLabel{\n"
-"    font: 8pt \"Segoe UI Emoji\";\n"
-"    color: #fff;\n"
-"    font-size: 14px;\n"
-"    padding: 0;\n"
-"    margin: 0;\n"
-"}")
+                "    font: 8pt \"Segoe UI Emoji\";\n"
+                "    color: #fff;\n"
+                "    font-size: 14px;\n"
+                "    padding: 0;\n"
+                "    margin: 0;\n"
+                "}")
         self.portLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.portLabel.setOpenExternalLinks(False)
         self.portLabel.setObjectName("portLabel")
         self.portLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.portLabel)
+        
         self.portInput = QtWidgets.QLineEdit(self.layoutWidget)
         self.portInput.setMinimumSize(QtCore.QSize(150, 20))
         self.portInput.setMaximumSize(QtCore.QSize(150, 20))
         self.portInput.setStyleSheet("QLineEdit{\n"
-"    color: #fff;\n"
-"    padding-left: 10px;\n"
-"    font: 8pt \"Segoe UI Emoji\";\n"
-"    border: 2px solid;\n"
-"    border-color: #2E3349;\n"
-"    border-radius: 8px;\n"
-"    background: #252A40;\n"
-"}\n"
-"")
+                "    color: #fff;\n"
+                "    padding-left: 10px;\n"
+                "    font: 8pt \"Segoe UI Emoji\";\n"
+                "    border: 2px solid;\n"
+                "    border-color: #2E3349;\n"
+                "    border-radius: 8px;\n"
+                "    background: #252A40;\n"
+                "}\n""")
         self.portInput.setObjectName("portInput")
         self.portLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.portInput)
         self.inputsLayout.addLayout(self.portLayout, 1, 0, 1, 1)
+        
         self.bottomLayout.setLayout(0, QtWidgets.QFormLayout.LabelRole, self.inputsLayout)
         self.btnLayout = QtWidgets.QGridLayout()
         self.btnLayout.setObjectName("btnLayout")
+        
         self.startBtn = QtWidgets.QPushButton(self.layoutWidget)
         self.startBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor)) #hover effect
         self.startBtn.setMinimumSize(QtCore.QSize(100, 30))
         self.startBtn.setMaximumSize(QtCore.QSize(100, 30))
         self.startBtn.setStyleSheet("QPushButton\n"
-"{\n"
-"    font: 8pt \"Segoe UI Emoji\";\n"
-"    color: #fff;\n"
-"    font-size: 14px;\n"
-"    background-color: #252A40;\n"
-"    radius: 8px;\n"
-"    border-radius: 8px;\n"
-"    border: 5px solid #2E3349;\n"
-"    letter-spacing: 2px;\n"
-"}\n"
-"QPushButton:hover{\n"
-"    background-color: #2E3349;\n"
-"    border: 5px solid #252A40;\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"")
+                "{\n"
+                "    font: 8pt \"Segoe UI Emoji\";\n"
+                "    color: #fff;\n"
+                "    font-size: 14px;\n"
+                "    background-color: #007f5f;\n"
+                "    radius: 8px;\n"
+                "    border-radius: 8px;\n"
+                "    border: 5px solid #2b9348;\n"
+                "    letter-spacing: 2px;\n"
+                "    outline: none; \n"
+                "}\n"
+                "QPushButton:hover{\n"
+                "    background-color: #2b9348;\n"
+                "    border: 5px solid #007f5f;\n"
+                "}\n""")
         self.startBtn.setObjectName("startBtn")
         self.btnLayout.addWidget(self.startBtn, 0, 0, 1, 1, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.bottomLayout.setLayout(0, QtWidgets.QFormLayout.FieldRole, self.btnLayout)
         self.contentLayout.addLayout(self.bottomLayout)
    
         self.startBtn.setCheckable(True) 
-        self.startBtn.clicked.connect(lambda: self.startBtnHandler(self.ipInput.text(), self.portInput.text()))
+        
+        self.thread = None
+        self.isActive = False
+        self.startBtn.clicked.connect(self.handleClick)
+        # self.startBtn.clicked.connect(lambda: self.startBtnHandler(self.ipInput.text(), self.portInput.text()))
 
         #self.startBtn.clicked.connect(lambda: self.callStartBtn(self.ipInput.text(), self.portInput.text()))
 
@@ -242,32 +254,90 @@ class Ui_Dialog(object):
         self.portLabel.setText(_translate("Dialog", "Port:"))
         self.startBtn.setText(_translate("Dialog", "START"))
 
-    def startBtnHandler(self, ip, port):
-        if self.startBtn.isChecked():
-            self.startThread(ip, port)
+    def handleClick(self):
+        if self.isActive == False:
+            self.startTh()
+            self.isActive = True
+            self.startBtn.setText("STOP")
+            self.startBtn.setStyleSheet("QPushButton\n"
+                "{\n"
+                "    font: 8pt \"Segoe UI Emoji\";\n"
+                "    color: #fff;\n"
+                "    font-size: 14px;\n"
+                "    radius: 8px;\n"
+                "    border-radius: 8px;\n"
+                "    letter-spacing: 2px;\n"
+                "    background-color: #a01a58;\n"
+                "    border: 5px solid #b7094c;\n"
+                "    outline: none; \n"
+                "}\n"
+                "QPushButton:hover{\n"
+                "    background-color: #b7094c;\n"
+                "    border: 5px solid #a01a58;\n"
+                "}\n""")
         else:
-            self.stopThread()
+            self.stopTh()
+            self.isActive = False
+            self.startBtn.setText("START")
+            self.startBtn.setStyleSheet("QPushButton\n"
+                "{\n"
+                "    font: 8pt \"Segoe UI Emoji\";\n"
+                "    color: #fff;\n"
+                "    font-size: 14px;\n"
+                "    radius: 8px;\n"
+                "    border-radius: 8px;\n"
+                "    letter-spacing: 2px;\n"
+                "    background-color: #007f5f;\n"
+                "    border: 5px solid #2b9348;\n"
+                "    outline: none; \n"
+                "}\n"
+                "QPushButton:hover{\n"
+                "    background-color: #2b9348;\n"
+                "    border: 5px solid #007f5f;\n"
+                "}\n""")
+            
 
-    def startThread(self, ip, port):
-        print("START")
-        self.s = server.Server()
-        self.s.set_params(ip, port)
-       
-        self.thread = QThread()
-        self.s.moveToThread(self.thread)
-        self.thread.started.connect(self.s.run)
-        # self.s.finished.connect(self.thread.quit)
-        # self.s.finished.connect(self.s.deleteLater)
-        # self.s.finished.connect(self.thread.deleteLater)
+    def startTh(self):
+        self.thread = server.Server(parent=self)
+        if (self.ipInput.text() or self.portInput.text()) == "":
+                self.thread.set_params("0", "0")
+        self.thread.set_params(self.ipInput.text(), self.portInput.text())
         self.thread.start()
-       
-    def stopThread(self):
-        self.s.stop()
-        self.thread.quit()
-        
-        self.thread.wait(1)
-     
 
+    def stopTh(self):
+        self.thread.stop()
+    
+    def updateLogs(self, msg):
+            self.logsArea.append(msg)
+
+#  def startBtnHandler(self, ip, port):
+#         if self.startBtn.isChecked():
+#             self.startThread(ip, port)
+#         else:
+#             self.stopThread()
+
+
+#     def startThread(self, ip, port):
+#         print("START")
+#         self.s = server.Server()
+#         self.s.set_params(ip, port)
+       
+#         self.thread = QThread()
+#         self.thread.started.connect(self.s.run)
+#         self.s.moveToThread(self.thread)
+        
+#         self.s.finished.connect(self.thread.quit)
+#         self.s.finished.connect(self.s.deleteLater)
+#         self.s.finished.connect(self.thread.deleteLater)
+#         self.thread.start()
+       
+#     def stopThread(self):
+#         self.s.stop()
+#         print("stopik")
+#         self.thread.exit()
+        
+        # self.thread.quit()
+    
 
 #     @pyqtSlot()
 #     def run_on_complete(self):
