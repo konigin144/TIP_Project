@@ -10,6 +10,7 @@ import sys, path, os, asyncio, threading
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from GuiFunc import *
 import server 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -238,6 +239,14 @@ class Ui_Dialog(object):
         self.thread = None
         self.isActive = False
         self.startBtn.clicked.connect(self.handleClick)
+
+        #methods mapping
+        Ui_Dialog.startTh = startTh
+        Ui_Dialog.stopTh = stopTh
+        Ui_Dialog.updateLogs = updateLogs
+        Ui_Dialog.checkInputs = checkInputs
+        Ui_Dialog.checkIp = checkIp
+        Ui_Dialog.checkPort = checkPort
         # self.startBtn.clicked.connect(lambda: self.startBtnHandler(self.ipInput.text(), self.portInput.text()))
 
         #self.startBtn.clicked.connect(lambda: self.callStartBtn(self.ipInput.text(), self.portInput.text()))
@@ -298,45 +307,6 @@ class Ui_Dialog(object):
                 "}\n""")
             
 
-    def startTh(self):
-        self.thread = server.Server(parent=self)
-        self.thread.set_params(self.ipInput.text(), self.portInput.text())
-        self.thread.start()
-
-    def stopTh(self):
-        self.thread.stop()
-    
-    def updateLogs(self, msg):
-            self.logsArea.append(msg)
-
-    def checkInputs(self):
-        print("przed warunkiem")
-        if self.checkPort(self.portInput.text()) is not True and self.checkIp(self.ipInput.text()) is not True:   
-                self.portInput.setText("Wrong port number!")
-                self.ipInput.setText("Wrong IP address!")      
-                return False
-        elif self.checkIp(self.ipInput.text()) is not True:           
-                self.ipInput.setText("Wrong IP address!")  
-                return False
-        elif self.checkPort(self.portInput.text()) is not True:
-                self.portInput.setText("Wrong port number!")
-                return False
-        return True
-
-    def checkIp(self, ip_addr):
-        def partCheck(ip_addr):
-            try: return str(int(ip_addr)) == ip_addr and 0 <= int(ip_addr) <= 255
-            except: return False
-        if ip_addr.count(".") == 3 and all(partCheck(i) for i in ip_addr.split(".")):
-            return True
-
-    def checkPort(self, port):
-        if port is "":
-                return False
-        if all(d.isdigit() for d in port) and (int(port) >= 1 and int(port) <= 65000):
-                return True
-        return False
-
 #  def startBtnHandler(self, ip, port):
 #         if self.startBtn.isChecked():
 #             self.startThread(ip, port)
@@ -387,7 +357,6 @@ class Ui_Dialog(object):
 
 import res_rc
 
-
 if __name__ == "__main__": 
 
     app = QtWidgets.QApplication(sys.argv)
@@ -396,9 +365,3 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
-     
-   
-  
-
-
-   
