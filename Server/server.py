@@ -71,6 +71,7 @@ class Server(QThread):
             self.connections.append(c)
             print("przed nowym wątkiem")
             
+            self.parent.updateLogs("[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]))
             t = threading.Thread(target=self.handle_client, args=(c,addr,))
             self.q.append(t)
             t.start()
@@ -94,6 +95,7 @@ class Server(QThread):
                 data = c.recv(1024)
                 self.broadcast(c, data)  
             except socket.error:
+                self.parent.updateLogs("[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]) + " - Disconnected")
                 c.close()
 
     def check_ip(self, ip_addr):

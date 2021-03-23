@@ -35,7 +35,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.setEnabled(True)
-        Dialog.resize(600, 799)
+        Dialog.resize(600, 800)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -118,6 +118,7 @@ class Ui_Dialog(object):
                 "    color: #2EFB22;\n"
                 "    font-family: Consolas;\n"
                 "}\n""")
+    
         self.logsArea.setObjectName("logsArea")
         self.contentLayout.addWidget(self.logsArea)
         
@@ -255,7 +256,7 @@ class Ui_Dialog(object):
         self.startBtn.setText(_translate("Dialog", "START"))
 
     def handleClick(self): #Tych stylów nie można przenieść bo one są dynamicznie dodawane na kliknięcie
-        if self.isActive == False:
+        if self.isActive == False and self.checkInputs():
             self.startTh()
             self.isActive = True
             self.startBtn.setText("STOP")
@@ -275,7 +276,7 @@ class Ui_Dialog(object):
                 "    background-color: #b7094c;\n"
                 "    border: 5px solid #a01a58;\n"
                 "}\n""")
-        else:
+        elif self.checkInputs():
             self.stopTh()
             self.isActive = False
             self.startBtn.setText("START")
@@ -299,8 +300,6 @@ class Ui_Dialog(object):
 
     def startTh(self):
         self.thread = server.Server(parent=self)
-        if (self.ipInput.text() or self.portInput.text()) == "":
-                self.thread.set_params("0", "0")
         self.thread.set_params(self.ipInput.text(), self.portInput.text())
         self.thread.start()
 
@@ -309,6 +308,34 @@ class Ui_Dialog(object):
     
     def updateLogs(self, msg):
             self.logsArea.append(msg)
+
+    def checkInputs(self):
+        print("przed warunkiem")
+        if self.checkPort(self.portInput.text()) is not True and self.checkIp(self.ipInput.text()) is not True:   
+                self.portInput.setText("Wrong port number!")
+                self.ipInput.setText("Wrong IP address!")      
+                return False
+        elif self.checkIp(self.ipInput.text()) is not True:           
+                self.ipInput.setText("Wrong IP address!")  
+                return False
+        elif self.checkPort(self.portInput.text()) is not True:
+                self.portInput.setText("Wrong port number!")
+                return False
+        return True
+
+    def checkIp(self, ip_addr):
+        def partCheck(ip_addr):
+            try: return str(int(ip_addr)) == ip_addr and 0 <= int(ip_addr) <= 255
+            except: return False
+        if ip_addr.count(".") == 3 and all(partCheck(i) for i in ip_addr.split(".")):
+            return True
+
+    def checkPort(self, port):
+        if port is "":
+                return False
+        if all(d.isdigit() for d in port) and (int(port) >= 1 and int(port) <= 65000):
+                return True
+        return False
 
 #  def startBtnHandler(self, ip, port):
 #         if self.startBtn.isChecked():
