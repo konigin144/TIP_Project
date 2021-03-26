@@ -14,30 +14,32 @@ class Server(QThread):
            self.connections = []
            self.s = socket.socket()
            self.q = list()
-           self.flag = False
+           self.isRunning = False
            self.logs = []
            self.parent = parent
+           self.bind_flag = False
            
     def run(self):
-        self.flag = True
+        self.isRunning = True
         self.start_button()
+        print("Serwer startuje")
+       
     
     def stop(self):
         print("Stop")
         self.parent.updateLogs("[Server] Shutdown")
         for c in self.connections:
+            self.parent.updateLogs("[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]) + " - Disconnected")
             c.close()
         self.s.close()
-
         self.terminate()
-        self.flag = False
+        self.isRunning = False
     
     def set_params(self, ip_addr, port_number):
         self.ip = socket.gethostbyname(ip_addr)
         self.port = int(port_number)
 
     def start_button(self):
-        bind_flag = False
         try:
             print(str(self.ip) + " START BUTTON " + str(type(self.ip)))
             print(str(self.port) + " START BUTTON " + str(type(self.port)))
@@ -45,14 +47,14 @@ class Server(QThread):
             self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             self.s.bind((self.ip, self.port))
-            bind_flag = True
-            print(bind_flag)
+            self.bind_flag = True
+            print(self.bind_flag)
         except:
-            print("Couldn't bind to that port")
-            bind_flag = False
-            print(bind_flag)
+            print("Couldn't self.bind to that port")
+            self.bind_flag = False
+            print(self.bind_flag)
         
-        if bind_flag:
+        if self.bind_flag:
             self.accept_connections()
                  
     def accept_connections(self):

@@ -1,4 +1,4 @@
-import sys, path, os, asyncio, threading
+import sys, path, os, asyncio, threading, socket
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -17,14 +17,18 @@ def updateLogs(self, msg):
 
 def checkInputs(self):
     print("przed warunkiem")
-    if self.checkPort(self.portInput.text()) is not True and self.checkIp(self.ipInput.text()) is not True:   
+    if self.checkPort(self.portInput.text()) is not True and self.checkIp(self.ipInput.text()) is not True:  
+            self.ipInput.setStyleSheet("color: red")
+            self.portInput.setStyleSheet("color: red")      
             self.portInput.setText("Wrong port number!")
-            self.ipInput.setText("Wrong IP address!")      
+            self.ipInput.setText("Wrong IP address!")     
             return False
-    elif self.checkIp(self.ipInput.text()) is not True:           
+    elif self.checkIp(self.ipInput.text()) is not True: 
+            self.ipInput.setStyleSheet("color: red")   
             self.ipInput.setText("Wrong IP address!")  
             return False
     elif self.checkPort(self.portInput.text()) is not True:
+            self.portInput.setStyleSheet("color: red")     
             self.portInput.setText("Wrong port number!")
             return False
     return True
@@ -37,8 +41,21 @@ def checkIp(self, ip_addr):
         return True
 
 def checkPort(self, port):
-    if port is "":
+    if port == "":
             return False
     if all(d.isdigit() for d in port) and (int(port) >= 1 and int(port) <= 65000):
             return True
     return False
+
+def checkSocket(self, ip, port):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            s.bind((ip, int(port)))
+            return True
+        except:
+            self.updateLogs("[Server] Couldn't create socket for given parameters.")
+            return False
+        finally:
+            s.close()
+           

@@ -162,6 +162,7 @@ class Ui_Dialog(object):
         self.ipInput.setObjectName("ipInput")
         self.ipLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.ipInput)
         self.inputsLayout.addLayout(self.ipLayout, 0, 0, 1, 1)
+ 
         
         self.portLayout = QtWidgets.QFormLayout()
         self.portLayout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
@@ -247,6 +248,8 @@ class Ui_Dialog(object):
         Ui_Dialog.checkInputs = checkInputs
         Ui_Dialog.checkIp = checkIp
         Ui_Dialog.checkPort = checkPort
+        Ui_Dialog.checkSocket = checkSocket
+       
         # self.startBtn.clicked.connect(lambda: self.startBtnHandler(self.ipInput.text(), self.portInput.text()))
 
         #self.startBtn.clicked.connect(lambda: self.callStartBtn(self.ipInput.text(), self.portInput.text()))
@@ -257,7 +260,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.roomsDropDown.setItemText(0, _translate("Dialog", "ROOM_1 - IP 192.168.0.1 - PORT - 66003"))
+        self.roomsDropDown.setItemText(0, _translate("Dialog", "ROOM_1 - IP 192.168.0.105 - PORT - 65"))
         self.roomsDropDown.setItemText(1, _translate("Dialog", "2"))
         self.roomsDropDown.setItemText(2, _translate("Dialog", "3"))
         self.ipLabel.setText(_translate("Dialog", "IP:"))
@@ -266,10 +269,11 @@ class Ui_Dialog(object):
 
     def handleClick(self): #Tych stylów nie można przenieść bo one są dynamicznie dodawane na kliknięcie
         if self.isActive == False and self.checkInputs():
-            self.startTh()
-            self.isActive = True
-            self.startBtn.setText("STOP")
-            self.startBtn.setStyleSheet("QPushButton\n"
+            if self.checkSocket(self.ipInput.text(), self.portInput.text()) == True:
+                self.startTh()
+                self.isActive = True
+                self.startBtn.setText("STOP")
+                self.startBtn.setStyleSheet("QPushButton\n"
                 "{\n"
                 "    font: 8pt \"Segoe UI Emoji\";\n"
                 "    color: #fff;\n"
