@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>341</width>
+    <height>210</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::DefaultContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(24, 30, 54)
+</string>
+  </property>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>12</x>
+     <y>12</y>
+     <width>316</width>
+     <height>115</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="upperLayout">
+    <item row="1" column="0">
+     <layout class="QFormLayout" name="inputsLayout">
+      <item row="0" column="0">
+       <layout class="QFormLayout" name="ipLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="ipLabel">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	color: #fff;
+	font-size: 14px;
+	text-align: left;
+	margin-left: -200px;	
+}
+</string>
+          </property>
+          <property name="text">
+           <string>IP:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="ipInput">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit{
+	color: #fff;
+	padding-left: 10px;
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	border: 2px solid;
+	border-color: #2E3349;
+	border-radius: 8px;
+	background: #252A40;
+}
+
+</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <layout class="QFormLayout" name="portLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
+        <property name="rowWrapPolicy">
+         <enum>QFormLayout::DontWrapRows</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="portLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	color: #fff;
+	font-size: 14px;
+	padding: 0;
+	margin: 0;
+}</string>
+          </property>
+          <property name="text">
+           <string>Port:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="openExternalLinks">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="portInput">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit{
+	color: #fff;
+	padding-left: 10px;
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	border: 2px solid;
+	border-color: #2E3349;
+	border-radius: 8px;
+	background: #252A40;
+}
+</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0">
+       <layout class="QFormLayout" name="nickLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="nickLabel">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	color: #fff;
+	font-size: 14px;
+	text-align: left;
+	margin-left: -200px;	
+}
+</string>
+          </property>
+          <property name="text">
+           <string>Nick:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="nickInput">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit{
+	color: #fff;
+	padding-left: 10px;
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	border: 2px solid;
+	border-color: #2E3349;
+	border-radius: 8px;
+	background: #252A40;
+}
+
+</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1">
+     <layout class="QGridLayout" name="startBtnLayout">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="startBtn">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	color: #fff;
+	font-size: 14px;
+	background-color: #252A40;
+	radius: 8px;
+	border-radius: 8px;
+	border: 5px solid #2E3349;
+	letter-spacing: 2px;
+}
+QPushButton:hover{
+	background-color: #2E3349;
+	border: 5px solid #252A40;
+}
+
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>START</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QLineEdit" name="statusBar">
+      <property name="maximumSize">
+       <size>
+        <width>315</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit{
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	padding-left: 10px;
+	background-color: #252A40;
+	border: 5px solid #2E3349;
+	color: white;
+	radius: 8px;
+	border-radius: 8px;
+	 selection-background-color: #2E334;
+}</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>140</y>
+     <width>181</width>
+     <height>53</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridBtn">
+    <item row="0" column="1">
+     <widget class="QPushButton" name="spkBtn">
+      <property name="minimumSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	color: #fff;
+	font-size: 14px;
+	background-color: #252A40;
+	radius: 8px;
+	border-radius: 8px;
+	border: 5px solid #2E3349;
+	letter-spacing: 2px;
+}
+QPushButton:hover{
+	background-color: #2E3349;
+	border: 5px solid #252A40;
+}
+
+
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="micBtn">
+      <property name="minimumSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton
+{
+	font: 8pt &quot;Segoe UI Emoji&quot;;
+	color: #fff;
+	font-size: 14px;
+	background-color: #252A40;
+	radius: 8px;
+	border-radius: 8px;
+	border: 5px solid #2E3349;
+	letter-spacing: 2px;
+}
+QPushButton:hover{
+	background-color: #2E3349;
+	border: 5px solid #252A40;
+}
+
+
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
+ <connections/>
+</ui>
