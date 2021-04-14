@@ -1,15 +1,10 @@
-#!/usr/bin/python3
-
-import socket
-import threading
-import pyaudio
+import socket, threading, pyaudio
 from multiprocessing import Process
 from PyQt5.QtCore import QThread, QRunnable, QThreadPool, pyqtSlot, QObject, pyqtSignal, QMutex
 
 class Client(QThread):
     def __init__(self, parent=None):
-        super(Client, self).__init__() 
-        
+        super(Client, self).__init__()       
         self.parent = parent
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -31,8 +26,7 @@ class Client(QThread):
     
     def stop(self):
         self.s.close()
-        self.terminate()
-       
+        self.terminate()   
        
     def start_button(self):
         try:  
@@ -48,9 +42,6 @@ class Client(QThread):
     def receive_server_data(self):
         while True:
             try:
-                # if self.running_flag is False:
-                #     print("elooo")
-                #     return
                 data = self.s.recv(1024)
                 if self.recive_flag:
                     self.playing_stream.write(data)
@@ -70,5 +61,3 @@ class Client(QThread):
     def set_params(self, ip_addr, port_number):
         self.ip_addr = socket.gethostbyname(ip_addr)
         self.port_number = int(port_number)
-
-# client = Client()

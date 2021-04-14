@@ -3,6 +3,7 @@ import sys, path, os, asyncio, threading, socket
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import server
+from stylesheets import startBtnStartStyle, startBtnStopStyle
 
 def startTh(self):
     self.thread = server.Server(parent=self)
@@ -13,24 +14,23 @@ def stopTh(self):
     self.thread.stop()
 
 def updateLogs(self, msg):
-        self.logsArea.append(msg)
+    self.logsArea.append(msg)
 
 def checkInputs(self):
-    print("przed warunkiem")
     if self.checkPort(self.portInput.text()) is not True and self.checkIp(self.ipInput.text()) is not True:  
-            self.ipInput.setStyleSheet("color: red")
-            self.portInput.setStyleSheet("color: red")      
-            self.portInput.setText("Wrong port number!")
-            self.ipInput.setText("Wrong IP address!")     
-            return False
+        self.ipInput.setStyleSheet("color: red")
+        self.portInput.setStyleSheet("color: red")      
+        self.portInput.setText("Wrong port number!")
+        self.ipInput.setText("Wrong IP address!")     
+        return False
     elif self.checkIp(self.ipInput.text()) is not True: 
-            self.ipInput.setStyleSheet("color: red")   
-            self.ipInput.setText("Wrong IP address!")  
-            return False
+        self.ipInput.setStyleSheet("color: red")   
+        self.ipInput.setText("Wrong IP address!")  
+        return False
     elif self.checkPort(self.portInput.text()) is not True:
-            self.portInput.setStyleSheet("color: red")     
-            self.portInput.setText("Wrong port number!")
-            return False
+        self.portInput.setStyleSheet("color: red")     
+        self.portInput.setText("Wrong port number!")
+        return False
     return True
 
 def checkIp(self, ip_addr):
@@ -42,20 +42,32 @@ def checkIp(self, ip_addr):
 
 def checkPort(self, port):
     if port == "":
-            return False
+        return False
     if all(d.isdigit() for d in port) and (int(port) >= 1 and int(port) <= 65000):
-            return True
+        return True
     return False
 
 def checkSocket(self, ip, port):
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            s.bind((ip, int(port)))
-            return True
-        except:
-            self.updateLogs("[Server] Couldn't create socket for given parameters.")
-            return False
-        finally:
-            s.close()
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.bind((ip, int(port)))
+        return True
+    except:
+        self.updateLogs("[Server] Couldn't create socket for given parameters.")
+        return False
+    finally:
+        s.close()
            
+def handleClick(self):
+    if self.isActive == False and self.checkInputs():
+        if self.checkSocket(self.ipInput.text(), self.portInput.text()) == True:
+            self.startTh()
+            self.isActive = True
+            self.startBtn.setText("STOP")
+            self.startBtn.setStyleSheet(startBtnStopStyle)
+    elif self.checkInputs():
+        self.stopTh()
+        self.isActive = False
+        self.startBtn.setText("START")
+        self.startBtn.setStyleSheet(startBtnStartStyle)
