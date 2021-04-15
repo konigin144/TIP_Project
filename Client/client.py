@@ -31,6 +31,9 @@ class Client(QThread):
     def start_button(self):
         try:  
             self.s.connect((self.ip_addr, self.port_number))
+            # l_onoff = 1
+            # l_linger = 0
+            # self.s.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack('ii', l_onoff, l_linger))
             self.parent.updateStatus("Connected to server: " + self.ip_addr + ":" + str(self.port_number))
         except:
             self.parent.updateStatus("Couldn't connect to server: " + self.ip_addr + ":" + str(self.port_number))
@@ -46,7 +49,7 @@ class Client(QThread):
                 if self.recive_flag:
                     self.playing_stream.write(data)
             except:
-                pass
+                self.stop()
 
 
     def send_data_to_server(self):
@@ -56,7 +59,7 @@ class Client(QThread):
                     data = self.recording_stream.read(1024)
                     self.s.sendall(data)
             except:
-                pass
+                self.stop()
     
     def set_params(self, ip_addr, port_number):
         self.ip_addr = socket.gethostbyname(ip_addr)

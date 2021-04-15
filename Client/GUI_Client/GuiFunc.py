@@ -12,6 +12,7 @@ def initClient(self):
 
 def startTh(self):
     print(self.ipInput.text() + "   " + self.portInput.text())
+    self.initClient()
     self.thread.set_params(self.ipInput.text(), self.portInput.text())
     self.thread.start()
 
@@ -72,11 +73,19 @@ def handleClickStartBtn(self):
             self.isActive = True
             self.startBtn.setText("DISCONNECT")
             self.startBtn.setStyleSheet(startBtnStopStyle)
+            self.micBtn.setIcon(QIcon(self.imgPath + "mic_on.png"))
+            self.micBtn.setStyleSheet(micBtnStyle)
+            self.spkBtn.setIcon(QIcon(self.imgPath + "speaker_on.png"))
+            self.spkBtn.setStyleSheet(spkBtnStyle)
     elif self.checkInputs():
         self.stopTh()
         self.isActive = False
         self.startBtn.setText("CONNECT")
         self.startBtn.setStyleSheet(startBtnStartStyle)
+        self.micBtn.setIcon(QIcon(self.imgPath + "mic_on.png"))
+        self.micBtn.setStyleSheet(micBtnStyle)
+        self.spkBtn.setIcon(QIcon(self.imgPath + "speaker_on.png"))
+        self.spkBtn.setStyleSheet(spkBtnStyle)
 
 def handleMicroBtn(self):
     if self.thread.send_flag == True:
