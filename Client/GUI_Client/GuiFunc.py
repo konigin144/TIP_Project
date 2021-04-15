@@ -97,3 +97,7 @@ def handleSpeakerBtn(self):
         self.thread.recive_flag = True
         self.spkBtn.setIcon(QIcon(self.imgPath + "speaker_on.png"))
         self.spkBtn.setStyleSheet(spkBtnStyle)
+
+def fillDropdown(self, roomsList):
+    self.parent.roomsDropDown.addItems(roomsList)
+    # for i, room in enumerate(roomsList):

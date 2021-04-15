@@ -3,6 +3,7 @@ from multiprocessing import Process
 from PyQt5.QtCore import QThread, QRunnable, QThreadPool, pyqtSlot, QObject, pyqtSignal, QMutex
 
 class Server(QThread):
+    update = pyqtSignal()
     def __init__(self, parent=None):
         super(Server, self).__init__() 
         self.connections = []
@@ -12,6 +13,7 @@ class Server(QThread):
         self.logs = []
         self.parent = parent
         self.bind_flag = False
+        self.roomNumber = 0
            
     def run(self):
         self.isRunning = True
@@ -20,10 +22,11 @@ class Server(QThread):
          
     def stop(self):
         print("Stop")
-        self.parent.updateLogs("[Server] Shutdown")
+        self.parent.addLogs('general', "[Room " + str(self.roomNumber) + "]" + " Shutdown")
         for c in self.connections:
-            self.parent.updateLogs("[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]) + " - Disconnected")
+            self.parent.addLogs('general' ,"[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]) + " - Disconnected from Room: " + str(self.roomNumber))
             c.close()
+        self.connections.clear()
         self.s.close()
         self.terminate()
         self.isRunning = False
@@ -42,6 +45,7 @@ class Server(QThread):
             self.s.bind((self.ip, self.port))
             self.bind_flag = True
             print(self.bind_flag)
+            self.parent.addLogs('general', "[Room " + str(self.roomNumber) + "]" + " Running on IP: " + self.ip + " - PORT: " + str(self.port))
         except:
             print("Couldn't self.bind to that port")
             self.bind_flag = False
@@ -50,13 +54,12 @@ class Server(QThread):
         if self.bind_flag:
             self.accept_connections()
                  
+    @pyqtSlot()            
     def accept_connections(self):
         print(str(self.ip) + " ACCEPT CONN " + str(type(self.ip)))
         print(str(self.port) + " ACCEPT CONN " + str(type(self.port)))
         self.s.listen(10)
 
-        self.parent.updateLogs('[Server] Running on IP: ' + self.ip)
-        self.parent.updateLogs('[Server] Running on port: ' + str(self.port))
         print('[Server] Running on IP: ' + self.ip)
         print('[Server] Running on port: ' + str(self.port))
 
@@ -66,7 +69,10 @@ class Server(QThread):
             self.connections.append(c)
             print("przed nowym wątkiem")
             
-            self.parent.updateLogs("[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]))
+            self.parent.addLogs('general', "[Client] IP: " + str(c.getpeername()[0]) + " - PORT: " + str(c.getpeername()[1]))
+            self.parent.addLogs(str(self.roomNumber), "[Client] IP: " + str(c.getpeername()[0]) + " - PORT: " + str(c.getpeername()[1]))
+            self.update.emit()
+
             t = threading.Thread(target=self.handle_client, args=(c,addr,))
             self.q.append(t)
             t.start()
@@ -80,14 +86,19 @@ class Server(QThread):
                 except:
                     pass
 
+    @pyqtSlot()                
     def handle_client(self,c,addr):
         while 1:
             try:
                 data = c.recv(1024)
                 self.broadcast(c, data)  
             except socket.error:
-                self.parent.updateLogs("[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]) + " - Disconnected")
+                self.parent.addLogs('general', "[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]) + " - Disconnected from Room: " + str(self.roomNumber))
+                self.parent.addLogs(str(self.roomNumber), "[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]) + " - Disconnected from Room: " + str(self.roomNumber))
+                self.update.emit()
+                
                 c.close()
+                self.connections.remove(c)
 
     def check_ip(self, ip_addr):
         def partCheck(ip_addr):

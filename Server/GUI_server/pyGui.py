@@ -50,17 +50,20 @@ class Ui_Dialog(object):
         self.roomsDropDown.setStyleSheet(roomsDropDownStyle)
         self.roomsDropDown.setEditable(False)
         self.roomsDropDown.setObjectName("roomsDropDown")
-        self.roomsDropDown.addItem("")
-        self.roomsDropDown.addItem("")
-        self.roomsDropDown.addItem("")
+        self.roomsDropDown.addItem("General info")
+        self.roomsDropDown.setMaxVisibleItems(11)
         self.roomsDropDown.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.roomsDropDown.view().setCursor(QCursor(QtCore.Qt.PointingHandCursor)) # Set pointer to the content of dropdown  
         self.contentLayout.addWidget(self.roomsDropDown)
         
+        self.scrollBar = QtWidgets.QScrollBar()
+        self.scrollBar.setStyleSheet(scrollBarStyle)
+
         self.logsArea = QtWidgets.QTextBrowser(self.layoutWidget)
         self.logsArea.setStyleSheet(logsAreaStyle)
     
         self.logsArea.setObjectName("logsArea")
+        self.logsArea.setVerticalScrollBar(self.scrollBar)
         self.contentLayout.addWidget(self.logsArea)
         
         self.bottomLayout = QtWidgets.QFormLayout()
@@ -142,24 +145,32 @@ class Ui_Dialog(object):
         Ui_Dialog.checkPort = checkPort
         Ui_Dialog.checkSocket = checkSocket
         Ui_Dialog.handleClick = handleClick
+        Ui_Dialog.checkNumOfRooms = checkNumOfRooms 
+        Ui_Dialog.fillDropdown = fillDropdown
+        Ui_Dialog.clearDropdown = clearDropdown
+        Ui_Dialog.handleItemDropdown = handleItemDropdown
+        Ui_Dialog.addLogs = addLogs
 
-        self.thread = None
+        self.threadList = []
+        self.logsDict = {'general': []}
+        self.currentLog = 'general'
         self.isActive = False
+        self.firstRun = 1
         self.startBtn.clicked.connect(self.handleClick)
+        self.roomsDropDown.activated[str].connect(self.handleItemDropdown)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+        self.roomsList = ["General info"]
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.roomsDropDown.setItemText(0, _translate("Dialog", "ROOM_1 - IP 192.168.0.105 - PORT - 65"))
-        self.roomsDropDown.setItemText(1, _translate("Dialog", "2"))
-        self.roomsDropDown.setItemText(2, _translate("Dialog", "3"))
         self.ipLabel.setText(_translate("Dialog", "IP:"))
-        self.portLabel.setText(_translate("Dialog", "Port:"))
+        self.portLabel.setText(_translate("Dialog", "Ports:"))
         self.startBtn.setText(_translate("Dialog", "START"))
-            
+
 import res_rc
 
 if __name__ == "__main__": 
