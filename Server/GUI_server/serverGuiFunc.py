@@ -3,7 +3,7 @@ import sys, path, os, asyncio, threading, socket, time
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import server
-from stylesheets import startBtnStartStyle, startBtnStopStyle
+from serverStylesheets import startBtnStartStyle, startBtnStopStyle
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 def startTh(self):

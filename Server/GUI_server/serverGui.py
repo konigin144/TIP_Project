@@ -15,8 +15,8 @@ from PyQt5.QtCore import QThread, QRunnable, QThreadPool, pyqtSlot, QObject, pyq
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QApplication
 
-from GuiFunc import *
-from stylesheets import *
+from serverGuiFunc import *
+from serverStylesheets import *
 import server 
 
 class Ui_Dialog(object):

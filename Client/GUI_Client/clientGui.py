@@ -15,8 +15,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QCursor, QIcon
 from PyQt5.QtCore import QSize
 
-from GuiFunc import *
-from stylesheets import *
+from clientGuiFunc import *
+from clientStylesheets import *
 import client 
 
 class Ui_Dialog(object):
@@ -168,6 +168,8 @@ class Ui_Dialog(object):
         
         self.thread = None
         self.isActive = False
+        self.muteMic_flag = False
+        self.muteSpk_flag = False
         self.startBtn.clicked.connect(self.handleClickStartBtn)
         self.micBtn.clicked.connect(self.handleMicroBtn)
         self.spkBtn.clicked.connect(self.handleSpeakerBtn)
