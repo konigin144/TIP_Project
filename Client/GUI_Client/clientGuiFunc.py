@@ -1,4 +1,5 @@
-import sys, path, os, asyncio, threading, socket
+import sys, path, os, asyncio, threading, socket, time
+from usernames import is_safe_username
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -21,22 +22,24 @@ def stopTh(self):
     self.thread.stop()
 
 def updateStatus(self, msg):
-    self.statusBar.setText(msg)
+    self.usersList[0] = msg
+    self.statusBar.clear()
+    self.statusBar.addItems(self.usersList)
 
 def checkInputs(self):
-    if self.checkPort(self.portInput.text()) is not True and self.checkIp(self.ipInput.text()) is not True:  
-        self.ipInput.setStyleSheet("color: red")
-        self.portInput.setStyleSheet("color: red")      
+    if self.checkPort(self.portInput.text()) is not True and self.checkIp(self.ipInput.text()) is not True and self.checkNickname(self.nickInput.text()) is not True:    
         self.portInput.setText("Wrong port number!")
-        self.ipInput.setText("Wrong IP address!")     
+        self.ipInput.setText("Wrong IP address!")
+        self.nickInput.setText("Wrong nickname!")     
         return False
     elif self.checkIp(self.ipInput.text()) is not True: 
-        self.ipInput.setStyleSheet("color: red")   
         self.ipInput.setText("Wrong IP address!")  
         return False
-    elif self.checkPort(self.portInput.text()) is not True:
-        self.portInput.setStyleSheet("color: red")     
+    elif self.checkPort(self.portInput.text()) is not True:  
         self.portInput.setText("Wrong port number!")
+        return False
+    elif self.checkNickname(self.nickInput.text()) is not True:
+        self.nickInput.setText("Wrong nickname!")     
         return False
     return True
 
@@ -54,31 +57,57 @@ def checkPort(self, port):
         return True
     return False
 
+def checkNickname(self, nickname):
+    is_safe_username(nickname)
+
 def checkSocket(self, ip, port):
+    # a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # connection_flag = False
+    # try:
+    #     a_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    #     a_socket.connect((ip, int(port)))
+    #     connection_flag = True
+    # except:
+    #     connection_flag = False
+    #     print("Connection failed")
+    # finally:
+    #     a_socket.close()
+    #     time.sleep(1)
+    #     return connection_flag
+
+    connection_flag = False
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((ip, int(port)))
-        return True
-    except:
         self.updateStatus("Couldn't connect to server: " + ip + " - " + port)
-        return False
+        connection_flag = False
+    except:
+        connection_flag = True
     finally:
         s.close()
+        return connection_flag
            
 def handleClickStartBtn(self):
     if self.isActive == False and self.checkInputs():
         if self.checkSocket(self.ipInput.text(), self.portInput.text()) == True:
+            time.sleep(1)
             self.startTh()
             if self.muteMic_flag:
                 self.thread.send_flag = False
             if self.muteSpk_flag:
                 self.thread.recive_flag = False
-            self.isActive = True
-            self.startBtn.setText("DISCONNECT")
-            self.startBtn.setStyleSheet(startBtnStopStyle)
+            self.startBtnChangeStatus(True)
     elif self.checkInputs():
         self.stopTh()
+        self.startBtnChangeStatus(False)
+
+def startBtnChangeStatus(self, status): # Status TRUE change to disconnect, Status FALSE change  to connect
+    if status:
+        self.isActive = True
+        self.startBtn.setText("DISCONNECT")
+        self.startBtn.setStyleSheet(startBtnStopStyle)
+    else:
         self.isActive = False
         self.startBtn.setText("CONNECT")
         self.startBtn.setStyleSheet(startBtnStartStyle)
@@ -107,5 +136,20 @@ def handleSpeakerBtn(self):
         self.spkBtn.setIcon(QIcon(self.imgPath + "speaker_on.png"))
         self.spkBtn.setStyleSheet(spkBtnStyle)
 
-def fillDropdown(self, roomsList):
-    self.parent.roomsDropDown.addItems(roomsList)
+def fillDropdown(self, usersString):
+    usersList = usersString[3:].split(" ")
+    print(usersList)
+    firstElem = self.usersList[0]
+    self.usersList.clear()
+    self.statusBar.clear()
+    self.usersList.append(firstElem)
+    if usersList[0] != "":
+        self.usersList += usersList
+    self.statusBar.addItems(self.usersList)
+
+
+# TODO
+# sprawdzanie formatu nicku 
+# obługa NAK od serwera
+# niekliklany statuso bar ram pam pam
+# szyfrowanie maybe

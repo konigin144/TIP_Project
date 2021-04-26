@@ -50,6 +50,7 @@ def updateLogs(self):
         self.logsArea.append(tmpStr)
 
 def addLogs(self, key, value):
+    print(key   + " Ja pierdole")
     self.logsDict.get(key).append(value)
 
 def checkInputs(self):

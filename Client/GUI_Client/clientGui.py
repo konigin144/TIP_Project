@@ -114,13 +114,19 @@ class Ui_Dialog(object):
         self.startBtn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.startBtnLayout.addWidget(self.startBtn, 0, 0, 1, 1)
         self.upperLayout.addLayout(self.startBtnLayout, 1, 1, 1, 1)
-        self.statusBar = QtWidgets.QLineEdit(self.widget)
-        self.statusBar.setReadOnly(True)
-        self.statusBar.setText("Please insert below parameters.")
-        self.statusBar.setMaximumSize(QtCore.QSize(315, 16777215))
+        
+        self.statusBar = QtWidgets.QComboBox(self.widget)
+        self.statusBar.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.statusBar.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.statusBar.setStyleSheet(statusBarStyle)
+        self.statusBar.setEditable(False)
         self.statusBar.setObjectName("statusBar")
+        self.statusBar.addItem("Please insert below parameters.")
+        self.statusBar.setMaxVisibleItems(11)
+        self.statusBar.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        # self.statusBar.view().setCursor(QCursor(QtCore.Qt.PointingHandCursor)) # Set pointer to the content of dropdown  
         self.upperLayout.addWidget(self.statusBar, 0, 0, 1, 2)
+        
         self.widget1 = QtWidgets.QWidget(Dialog)
         self.widget1.setGeometry(QtCore.QRect(40, 140, 181, 53))
         self.widget1.setObjectName("widget1")
@@ -165,6 +171,9 @@ class Ui_Dialog(object):
         Ui_Dialog.handleClickStartBtn = handleClickStartBtn
         Ui_Dialog.handleMicroBtn = handleMicroBtn
         Ui_Dialog.handleSpeakerBtn = handleSpeakerBtn
+        Ui_Dialog.startBtnChangeStatus = startBtnChangeStatus
+        Ui_Dialog.fillDropdown = fillDropdown
+        Ui_Dialog.checkNickname = checkNickname
         
         self.thread = None
         self.isActive = False
@@ -173,6 +182,8 @@ class Ui_Dialog(object):
         self.startBtn.clicked.connect(self.handleClickStartBtn)
         self.micBtn.clicked.connect(self.handleMicroBtn)
         self.spkBtn.clicked.connect(self.handleSpeakerBtn)
+
+        self.usersList = ["Please insert below parameters."]
 
         self.initClient()
 
