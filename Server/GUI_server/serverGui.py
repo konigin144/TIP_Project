@@ -77,8 +77,8 @@ class Ui_Dialog(object):
         self.ipLayout.setObjectName("ipLayout")
         
         self.ipLabel = QtWidgets.QLabel(self.layoutWidget)
-        self.ipLabel.setMinimumSize(QtCore.QSize(40, 20))
-        self.ipLabel.setMaximumSize(QtCore.QSize(40, 20))
+        self.ipLabel.setMinimumSize(QtCore.QSize(45, 20))
+        self.ipLabel.setMaximumSize(QtCore.QSize(45, 20))
         self.ipLabel.setStyleSheet(ipLabelStyle)
         self.ipLabel.setObjectName("ipLabel")
         self.ipLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.ipLabel)
@@ -104,8 +104,8 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.portLabel.sizePolicy().hasHeightForWidth())
         self.portLabel.setSizePolicy(sizePolicy)
-        self.portLabel.setMinimumSize(QtCore.QSize(40, 20))
-        self.portLabel.setMaximumSize(QtCore.QSize(40, 20))
+        self.portLabel.setMinimumSize(QtCore.QSize(45, 20))
+        self.portLabel.setMaximumSize(QtCore.QSize(45, 20))
         self.portLabel.setStyleSheet(portLabelStyle)
         self.portLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.portLabel.setOpenExternalLinks(False)
@@ -168,7 +168,7 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.ipLabel.setText(_translate("Dialog", "IP:"))
-        self.portLabel.setText(_translate("Dialog", "Ports:"))
+        self.portLabel.setText(_translate("Dialog", "Rooms:"))
         self.startBtn.setText(_translate("Dialog", "START"))
 
 import res_rc

@@ -147,9 +147,10 @@ def fillDropdown(self, usersString):
         self.usersList += usersList
     self.statusBar.addItems(self.usersList)
 
+def preventDropdownChange(self):
+    self.statusBar.setCurrentIndex(0)
 
 # TODO
-# sprawdzanie formatu nicku 
+# aby nie zmieniał się kolor w dropdownie po wybraniu myszką
 # obługa NAK od serwera
-# niekliklany statuso bar ram pam pam
 # szyfrowanie maybe

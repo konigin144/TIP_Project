@@ -174,6 +174,7 @@ class Ui_Dialog(object):
         Ui_Dialog.startBtnChangeStatus = startBtnChangeStatus
         Ui_Dialog.fillDropdown = fillDropdown
         Ui_Dialog.checkNickname = checkNickname
+        Ui_Dialog.preventDropdownChange = preventDropdownChange
         
         self.thread = None
         self.isActive = False
@@ -182,6 +183,7 @@ class Ui_Dialog(object):
         self.startBtn.clicked.connect(self.handleClickStartBtn)
         self.micBtn.clicked.connect(self.handleMicroBtn)
         self.spkBtn.clicked.connect(self.handleSpeakerBtn)
+        self.statusBar.currentIndexChanged.connect(self.preventDropdownChange)
 
         self.usersList = ["Please insert below parameters."]
 
