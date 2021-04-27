@@ -1,1 +1,1 @@
-python3 serverGui.py
+python serverGui.py

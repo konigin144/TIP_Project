@@ -58,7 +58,7 @@ def checkPort(self, port):
     return False
 
 def checkNickname(self, nickname):
-    is_safe_username(nickname)
+    return is_safe_username(nickname)
 
 def checkSocket(self, ip, port):
     # a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
