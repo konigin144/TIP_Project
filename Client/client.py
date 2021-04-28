@@ -31,18 +31,20 @@ class Client(QThread):
     def start_button(self):
         try:  
             self.s.connect((self.ip_addr, self.port_number))
-            # l_onoff = 1
-            # l_linger = 0
-            # self.s.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack('ii', l_onoff, l_linger))
-            self.parent.updateStatus("Connected to server: " + self.ip_addr + ":" + str(self.port_number))
         except:
             self.parent.updateStatus("Couldn't connect to server: " + self.ip_addr + ":" + str(self.port_number))
             print("Couldn't connect to server")
 
-        self.handleNick()
-        receive_thread = threading.Thread(target=self.receive_server_data)
-        receive_thread.start()
-        self.send_data_to_server()
+        #   
+        if self.handleNick():
+            self.parent.startBtnChangeStatus(True)
+            self.parent.updateStatus("Connected to server: " + self.ip_addr + ":" + str(self.port_number))
+            receive_thread = threading.Thread(target=self.receive_server_data)
+            receive_thread.start()
+            self.send_data_to_server()
+        else:
+            self.parent.nickInput.setText("This nick exist!")
+            self.parent.startBtnChangeStatus(False)
 
     def receive_server_data(self):
         while True:
@@ -84,5 +86,7 @@ class Client(QThread):
         msg = "N: " + self.parent.nickInput.text()
         self.s.send(bytes(msg.encode('utf-8')))
         data = self.s.recv(1024).decode('utf-8')
-        if "NAK" in data or "ACK" in data:
-            print(data)
+        if  "ACK" in data:
+            return True
+        elif "NAK" in data:
+            return False

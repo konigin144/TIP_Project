@@ -180,6 +180,7 @@ class Ui_Dialog(object):
         self.isActive = False
         self.muteMic_flag = False
         self.muteSpk_flag = False
+        self.nick_flag = False
         self.startBtn.clicked.connect(self.handleClickStartBtn)
         self.micBtn.clicked.connect(self.handleMicroBtn)
         self.spkBtn.clicked.connect(self.handleSpeakerBtn)
