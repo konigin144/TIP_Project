@@ -91,7 +91,7 @@ def checkSocket(self, ip, port):
 def handleClickStartBtn(self):
     if self.isActive == False and self.checkInputs():
         if self.checkSocket(self.ipInput.text(), self.portInput.text()) == True:
-            time.sleep(1)
+            # time.sleep(1)
             self.startTh()
             if self.muteMic_flag:
                 self.thread.send_flag = False
@@ -151,6 +151,4 @@ def preventDropdownChange(self):
     self.statusBar.setCurrentIndex(0)
 
 # TODO
-# aby nie zmieniał się kolor w dropdownie po wybraniu myszką
-# obługa NAK od serwera
 # szyfrowanie maybe
