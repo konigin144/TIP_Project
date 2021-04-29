@@ -166,7 +166,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Server"))
         self.ipLabel.setText(_translate("Dialog", "IP:"))
         self.portLabel.setText(_translate("Dialog", "Rooms:"))
         self.startBtn.setText(_translate("Dialog", "START"))

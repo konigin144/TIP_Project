@@ -22,7 +22,7 @@ import client
 class Ui_Dialog(object):
     imgPath = os.path.dirname(os.path.abspath(__file__)) + "/images/"
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
+        Dialog.setObjectName("Client")
         Dialog.setEnabled(True)
         Dialog.resize(341, 210)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -192,7 +192,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Client"))
         self.ipLabel.setText(_translate("Dialog", "IP:"))
         self.portLabel.setText(_translate("Dialog", "Port:"))
         self.nickLabel.setText(_translate("Dialog", "Nick:"))
