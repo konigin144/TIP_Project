@@ -1,4 +1,4 @@
-import socket, threading, asyncio, sys, traceback, os
+import socket, threading, asyncio, sys, traceback, os, ssl
 from multiprocessing import Process
 from PyQt5.QtCore import QThread, QRunnable, QThreadPool, pyqtSlot, QObject, pyqtSignal, QMutex
 
@@ -7,7 +7,11 @@ class Server(QThread):
     def __init__(self, parent=None):
         super(Server, self).__init__() 
         self.connections = {}
-        self.s = socket.socket()
+        self.sock = socket.socket()
+        self.CERT = "C:/Users/Geops/Desktop/ProjectVoIP/TIP_Project/Server/cert.pem"
+        self.KEY = "C:/Users/Geops/Desktop/ProjectVoIP/TIP_Project/Server/key.pem"
+        self.context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+        self.context.load_cert_chain(certfile=self.CERT)
         self.q = list()
         self.isRunning = False
         self.logs = []
@@ -15,12 +19,12 @@ class Server(QThread):
         self.bind_flag = False
         self.roomNumber = 0
         self.nickArr = []
-           
+          
     def run(self):
         self.isRunning = True
         self.start_button()
         print("Serwer startuje")
-         
+
     def stop(self):
         print("Stop")
         self.parent.addLogs('general', "[Room " + str(self.roomNumber) + "]" + " Shutdown")
@@ -28,7 +32,7 @@ class Server(QThread):
             self.parent.addLogs('general' ,"[Client] IP: " + str(c.getpeername()[0]) + " Port: " + str(c.getpeername()[1]) + " - Disconnected from Room: " + str(self.roomNumber))
             c.close()
         self.connections.clear()
-        self.s.close()
+        self.sock.close()
         self.terminate()
         self.isRunning = False
     
@@ -41,14 +45,19 @@ class Server(QThread):
             print(str(self.ip) + " START BUTTON " + str(type(self.ip)))
             print(str(self.port) + " START BUTTON " + str(type(self.port)))
         
-            self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            self.s.bind((self.ip, self.port))
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            self.sock.bind((self.ip, self.port))
+            # self.context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+            # self.context.load_cert_chain(certfile = self.CERT)  # 1. key, 2. cert, 3. intermediates
+            # self.context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1  # optional
+            # self.context.set_ciphers(self.KEY)
             self.bind_flag = True
             print(self.bind_flag)
             self.parent.addLogs('general', "[Room " + str(self.roomNumber) + "]" + " Running on IP: " + self.ip + " - PORT: " + str(self.port))
-        except:
-            print("Couldn't self.bind to that port")
+        except Exception as e:
+            print(e)
+            print("Couldn't bind to that port")
             self.bind_flag = False
             print(self.bind_flag)
         
@@ -59,16 +68,20 @@ class Server(QThread):
     def accept_connections(self):
         print(str(self.ip) + " ACCEPT CONN " + str(type(self.ip)))
         print(str(self.port) + " ACCEPT CONN " + str(type(self.port)))
-        self.s.listen(10)
+        self.sock.listen(10)
+        self.context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        self.context.load_cert_chain(certfile=self.CERT) 
+        self.context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1  # optional
+        self.context.set_ciphers('AES256+ECDH:AES256+EDH')
 
         print('[Server] Running on IP: ' + self.ip)
         print('[Server] Running on port: ' + str(self.port))
 
         while True:
             print("Pan pawel")
-            c, addr = self.s.accept()
-            
-            print("przed nowym wątkiem")
+            s, addr = self.sock.accept()
+            c = self.context.wrap_socket(s, server_side=True)
+            print("przed nowym wątkiem"), 
            
             if self.checkNick(c):
                 self.parent.addLogs('general', "[Client] IP: " + str(c.getpeername()[0]) + " - PORT: " + str(c.getpeername()[1]))
@@ -81,16 +94,16 @@ class Server(QThread):
                 t.start()
                 print("dodano thread")
         
-    def broadcast(self, sock, data):
+    def broadcast(self, c, data):
         for client in self.connections.values():
-            if client != self.s and client != sock:
+            if client != self.sock and client != c:
                 try:  
                     client.send(data)
                 except:
                     pass
 
     @pyqtSlot()                
-    def handle_client(self,c,addr):
+    def handle_client(self, c, addr):
         while 1:
             try:
                 data = c.recv(1024)
@@ -104,7 +117,6 @@ class Server(QThread):
                 self.connections = {key:val for key, val in self.connections.items() if val != c}
                 self.sendNicks()
                 print(c)
-                print(str(c)  + " O CHUJ " + str(self.connections))
 
     def check_ip(self, ip_addr):
         def partCheck(ip_addr):

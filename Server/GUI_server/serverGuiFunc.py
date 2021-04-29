@@ -50,7 +50,6 @@ def updateLogs(self):
         self.logsArea.append(tmpStr)
 
 def addLogs(self, key, value):
-    print(key   + " Ja pierdole")
     self.logsDict.get(key).append(value)
 
 def checkInputs(self):
@@ -83,7 +82,7 @@ def checkNumOfRooms(self, numOfRooms):
 def checkPort(self, port):
     if port == "":
         return False
-    if all(d.isdigit() for d in port) and (int(port) >= 1 and int(port) <= 65000):
+    if all(d.isdigit() for d in port) and (int(port) >= 29200 and int(port) <= 65000):
         return True
     return False
 
@@ -94,7 +93,8 @@ def checkSocket(self, ip, port=29200):
         s.bind((ip, int(port)))
         return True
     except:
-        self.updateLogs("[Server] Couldn't create socket for given parameters.")
+        self.addLogs('general', "[Server] Couldn't create socket for given parameters.")
+        self.updateLogs()
         return False
     finally:
         s.close()

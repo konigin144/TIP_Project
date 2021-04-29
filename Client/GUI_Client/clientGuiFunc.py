@@ -53,7 +53,7 @@ def checkIp(self, ip_addr):
 def checkPort(self, port):
     if port == "":
         return False
-    if all(d.isdigit() for d in port) and (int(port) >= 1 and int(port) <= 65000):
+    if all(d.isdigit() for d in port) and (int(port) >= 29200 and int(port) <= 65000):
         return True
     return False
 
@@ -97,7 +97,6 @@ def handleClickStartBtn(self):
                 self.thread.send_flag = False
             if self.muteSpk_flag:
                 self.thread.recive_flag = False
-            self.startBtnChangeStatus(True)
     elif self.checkInputs():
         self.stopTh()
         self.startBtnChangeStatus(False)
@@ -151,4 +150,5 @@ def preventDropdownChange(self):
     self.statusBar.setCurrentIndex(0)
 
 # TODO
-# szyfrowanie maybe
+# nazwy okienek
+# ikonki programu
