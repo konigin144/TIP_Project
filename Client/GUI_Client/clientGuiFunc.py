@@ -12,9 +12,8 @@ def initClient(self):
     self.thread = client.Client(parent=self)
 
 def startTh(self):
-    print(self.ipInput.text() + "   " + self.portInput.text())
     self.initClient()
-    self.thread.set_params(self.ipInput.text(), self.portInput.text())
+    self.thread.setParams(self.ipInput.text(), self.portInput.text())
     self.thread.start()
 
 def stopTh(self):
@@ -43,11 +42,11 @@ def checkInputs(self):
         return False
     return True
 
-def checkIp(self, ip_addr):
-    def partCheck(ip_addr):
-        try: return str(int(ip_addr)) == ip_addr and 0 <= int(ip_addr) <= 255
+def checkIp(self, ipAddr):
+    def partCheck(ipAddr):
+        try: return str(int(ipAddr)) == ipAddr and 0 <= int(ipAddr) <= 255
         except: return False
-    if ip_addr.count(".") == 3 and all(partCheck(i) for i in ip_addr.split(".")):
+    if ipAddr.count(".") == 3 and all(partCheck(i) for i in ipAddr.split(".")):
         return True
 
 def checkPort(self, port):
@@ -61,47 +60,31 @@ def checkNickname(self, nickname):
     return is_safe_username(nickname)
 
 def checkSocket(self, ip, port):
-    # a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # connection_flag = False
-    # try:
-    #     a_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    #     a_socket.connect((ip, int(port)))
-    #     connection_flag = True
-    # except:
-    #     connection_flag = False
-    #     print("Connection failed")
-    # finally:
-    #     a_socket.close()
-    #     time.sleep(1)
-    #     return connection_flag
-
-    connection_flag = False
+    connectionFlag = False
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     try:
         s.bind((ip, int(port)))
         self.updateStatus("Couldn't connect to server: " + ip + " - " + port)
-        connection_flag = False
+        connectionFlag = False
     except:
-        connection_flag = True
+        connectionFlag = True
     finally:
         s.close()
-        return connection_flag
+        return connectionFlag
            
 def handleClickStartBtn(self):
     if self.isActive == False and self.checkInputs():
         if self.checkSocket(self.ipInput.text(), self.portInput.text()) == True:
-            # time.sleep(1)
             self.startTh()
             if self.muteMic_flag:
-                self.thread.send_flag = False
+                self.thread.sendFlag = False
             if self.muteSpk_flag:
-                self.thread.recive_flag = False
+                self.thread.receiveFlag = False
     elif self.checkInputs():
         self.stopTh()
         self.startBtnChangeStatus(False)
 
-def startBtnChangeStatus(self, status): # Status TRUE change to disconnect, Status FALSE change  to connect
+def startBtnChangeStatus(self, status): # Status TRUE - change to disconnect, Status FALSE - change to connect
     if status:
         self.isActive = True
         self.startBtn.setText("DISCONNECT")
@@ -112,32 +95,31 @@ def startBtnChangeStatus(self, status): # Status TRUE change to disconnect, Stat
         self.startBtn.setStyleSheet(startBtnStartStyle)
 
 def handleMicroBtn(self):
-    if self.thread.send_flag == True:
-        self.thread.send_flag = False
+    if self.thread.sendFlag == True:
+        self.thread.sendFlag = False
         self.muteMic_flag = True
         self.micBtn.setIcon(QIcon(self.imgPath + "mic_off.png"))
         self.micBtn.setStyleSheet(micBtnStyle)
     else:
-        self.thread.send_flag = True
+        self.thread.sendFlag = True
         self.muteMic_flag = False
         self.micBtn.setIcon(QIcon(self.imgPath + "mic_on.png"))
         self.micBtn.setStyleSheet(micBtnStyle)
     
 def handleSpeakerBtn(self):
-    if self.thread.recive_flag == True:
-        self.thread.recive_flag = False
+    if self.thread.receiveFlag == True:
+        self.thread.receiveFlag = False
         self.muteSpk_flag = True
         self.spkBtn.setIcon(QIcon(self.imgPath + "speaker_off.png"))
         self.spkBtn.setStyleSheet(spkBtnStyle)
     else:
-        self.thread.recive_flag = True
+        self.thread.receiveFlag = True
         self.muteSpk_flag = False
         self.spkBtn.setIcon(QIcon(self.imgPath + "speaker_on.png"))
         self.spkBtn.setStyleSheet(spkBtnStyle)
 
 def fillDropdown(self, usersString):
-    usersList = usersString[3:].split(" ")
-    print(usersList)
+    usersList = usersString[6:].split(" ")
     firstElem = self.usersList[0]
     self.usersList.clear()
     self.statusBar.clear()
@@ -148,7 +130,3 @@ def fillDropdown(self, usersString):
 
 def preventDropdownChange(self):
     self.statusBar.setCurrentIndex(0)
-
-# TODO
-# nazwy okienek
-# ikonki programu

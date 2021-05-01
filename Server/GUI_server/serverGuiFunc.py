@@ -15,7 +15,7 @@ def startTh(self):
         port += 1
         if self.checkSocket(self.ipInput.text(), port):
             thread = server.Server(parent=self)
-            thread.set_params(self.ipInput.text(), port)
+            thread.setParams(self.ipInput.text(), port)
             thread.update.connect(self.updateLogs)
             thread.start()
             thread.roomNumber =  i + 1
@@ -42,8 +42,6 @@ def stopTh(self):
 
 def updateLogs(self):
     tmpList = self.logsDict.get(self.currentLog)
-    print("wywolanie logs")
-    print(self.logsDict)
     if tmpList != None:
         self.logsArea.clear()
         tmpStr = "\n".join(tmpList)
@@ -65,11 +63,11 @@ def checkInputs(self):
         return False
     return True
 
-def checkIp(self, ip_addr):
-    def partCheck(ip_addr):
-        try: return str(int(ip_addr)) == ip_addr and 0 <= int(ip_addr) <= 255
+def checkIp(self, ipAddr):
+    def partCheck(ipAddr):
+        try: return str(int(ipAddr)) == ipAddr and 0 <= int(ipAddr) <= 255
         except: return False
-    if ip_addr.count(".") == 3 and all(partCheck(i) for i in ip_addr.split(".")):
+    if ipAddr.count(".") == 3 and all(partCheck(i) for i in ipAddr.split(".")):
         return True
 
 def checkNumOfRooms(self, numOfRooms):
