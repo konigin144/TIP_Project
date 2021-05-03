@@ -10,9 +10,9 @@ class Server(QThread):
 
         self.connections = {}
         self.sock = socket.socket()
-        self.CERT = os.path.dirname(os.path.abspath(__file__)) + "/cert.pem"
+        self.cert = os.path.dirname(os.path.abspath(__file__)) + "/cert.pem"
         self.context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
-        self.context.load_cert_chain(certfile=self.CERT)
+        self.context.load_cert_chain(certfile=self.cert)
         self.bindFlag = False
         self.roomNumber = 0
           
@@ -28,9 +28,9 @@ class Server(QThread):
         self.sock.close()
         self.terminate()
     
-    def setParams(self, ipAddr, port_number):
+    def setParams(self, ipAddr, portNumber):
         self.ip = socket.gethostbyname(ipAddr)
-        self.port = int(port_number)
+        self.port = int(portNumber)
 
     def startButton(self):
         try:
@@ -49,7 +49,7 @@ class Server(QThread):
     def acceptConnections(self):
         self.sock.listen(10)
         self.context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-        self.context.load_cert_chain(certfile=self.CERT) 
+        self.context.load_cert_chain(certfile=self.cert) 
         self.context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1
         self.context.set_ciphers('AES256+ECDH:AES256+EDH')
 

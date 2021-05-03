@@ -55,7 +55,6 @@ class Ui_Dialog(object):
 
         self.logsArea = QtWidgets.QTextBrowser(self.layoutWidget)
         self.logsArea.setStyleSheet(logsAreaStyle)
-    
         self.logsArea.setObjectName("logsArea")
         self.logsArea.setVerticalScrollBar(self.scrollBar)
         self.contentLayout.addWidget(self.logsArea)
@@ -149,7 +148,6 @@ class Ui_Dialog(object):
         self.logsDict = {'general': []}
         self.currentLog = 'general'
         self.isActive = False
-        self.firstRun = 1
         self.startBtn.clicked.connect(self.handleClick)
         self.roomsDropDown.activated[str].connect(self.handleItemDropdown)
 

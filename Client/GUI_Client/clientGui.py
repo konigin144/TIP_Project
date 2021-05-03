@@ -107,8 +107,8 @@ class Ui_Dialog(object):
         self.nickInput.setObjectName("nickInput")
         self.nickLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.nickInput)
         self.inputsLayout.setLayout(2, QtWidgets.QFormLayout.LabelRole, self.nickLayout)
-
         self.upperLayout.addLayout(self.inputsLayout, 1, 0, 1, 1)
+        
         self.startBtnLayout = QtWidgets.QGridLayout()
         self.startBtnLayout.setObjectName("startBtnLayout")
         self.startBtn = QtWidgets.QPushButton(self.widget)
@@ -180,14 +180,13 @@ class Ui_Dialog(object):
         Ui_Dialog.handleSpeakerBtn = handleSpeakerBtn
         Ui_Dialog.startBtnChangeStatus = startBtnChangeStatus
         Ui_Dialog.fillDropdown = fillDropdown
-        Ui_Dialog.checkNickname = checkNickname
+        Ui_Dialog.checkNick = checkNick
         Ui_Dialog.preventDropdownChange = preventDropdownChange
         
         self.thread = None
         self.isActive = False
-        self.muteMic_flag = False
-        self.muteSpk_flag = False
-        self.nick_flag = False
+        self.muteMicFlag = False
+        self.muteSpkFlag = False
         self.startBtn.clicked.connect(self.handleClickStartBtn)
         self.micBtn.clicked.connect(self.handleMicroBtn)
         self.spkBtn.clicked.connect(self.handleSpeakerBtn)

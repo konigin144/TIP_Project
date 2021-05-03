@@ -70,17 +70,17 @@ def checkIp(self, ipAddr):
     if ipAddr.count(".") == 3 and all(partCheck(i) for i in ipAddr.split(".")):
         return True
 
-def checkNumOfRooms(self, numOfRooms):
-    if numOfRooms == "":
-        return False
-    if all(d.isdigit() for d in numOfRooms) and (int(numOfRooms) >= 1 and int(numOfRooms) <= 10):
-        return True
-    return False
-
 def checkPort(self, port):
     if port == "":
         return False
     if all(d.isdigit() for d in port) and (int(port) >= 29200 and int(port) <= 65000):
+        return True
+    return False
+
+def checkNumOfRooms(self, numOfRooms):
+    if numOfRooms == "":
+        return False
+    if all(d.isdigit() for d in numOfRooms) and (int(numOfRooms) >= 1 and int(numOfRooms) <= 10):
         return True
     return False
 

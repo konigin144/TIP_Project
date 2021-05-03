@@ -26,7 +26,7 @@ def updateStatus(self, msg):
     self.statusBar.addItems(self.usersList)
 
 def checkInputs(self):
-    if self.checkPort(self.portInput.text()) is not True and self.checkIp(self.ipInput.text()) is not True and self.checkNickname(self.nickInput.text()) is not True:    
+    if self.checkPort(self.portInput.text()) is not True and self.checkIp(self.ipInput.text()) is not True and self.checkNick(self.nickInput.text()) is not True:    
         self.portInput.setText("Wrong port number!")
         self.ipInput.setText("Wrong IP address!")
         self.nickInput.setText("Wrong nickname!")     
@@ -37,7 +37,7 @@ def checkInputs(self):
     elif self.checkPort(self.portInput.text()) is not True:  
         self.portInput.setText("Wrong port number!")
         return False
-    elif self.checkNickname(self.nickInput.text()) is not True:
+    elif self.checkNick(self.nickInput.text()) is not True:
         self.nickInput.setText("Wrong nickname!")     
         return False
     return True
@@ -56,8 +56,8 @@ def checkPort(self, port):
         return True
     return False
 
-def checkNickname(self, nickname):
-    return is_safe_username(nickname)
+def checkNick(self, nick):
+    return is_safe_username(nick)
 
 def checkSocket(self, ip, port):
     connectionFlag = False
@@ -76,9 +76,9 @@ def handleClickStartBtn(self):
     if self.isActive == False and self.checkInputs():
         if self.checkSocket(self.ipInput.text(), self.portInput.text()) == True:
             self.startTh()
-            if self.muteMic_flag:
+            if self.muteMicFlag:
                 self.thread.sendFlag = False
-            if self.muteSpk_flag:
+            if self.muteSpkFlag:
                 self.thread.receiveFlag = False
     elif self.checkInputs():
         self.stopTh()
@@ -97,24 +97,24 @@ def startBtnChangeStatus(self, status): # Status TRUE - change to disconnect, St
 def handleMicroBtn(self):
     if self.thread.sendFlag == True:
         self.thread.sendFlag = False
-        self.muteMic_flag = True
+        self.muteMicFlag = True
         self.micBtn.setIcon(QIcon(self.imgPath + "mic_off.png"))
         self.micBtn.setStyleSheet(micBtnStyle)
     else:
         self.thread.sendFlag = True
-        self.muteMic_flag = False
+        self.muteMicFlag = False
         self.micBtn.setIcon(QIcon(self.imgPath + "mic_on.png"))
         self.micBtn.setStyleSheet(micBtnStyle)
     
 def handleSpeakerBtn(self):
     if self.thread.receiveFlag == True:
         self.thread.receiveFlag = False
-        self.muteSpk_flag = True
+        self.muteSpkFlag = True
         self.spkBtn.setIcon(QIcon(self.imgPath + "speaker_off.png"))
         self.spkBtn.setStyleSheet(spkBtnStyle)
     else:
         self.thread.receiveFlag = True
-        self.muteSpk_flag = False
+        self.muteSpkFlag = False
         self.spkBtn.setIcon(QIcon(self.imgPath + "speaker_on.png"))
         self.spkBtn.setStyleSheet(spkBtnStyle)
 
