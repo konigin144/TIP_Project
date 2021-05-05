@@ -11,7 +11,7 @@ Contains two apps:
 
 ## Server GUI  
 
-![servergui](https://user-images.githubusercontent.com/56699286/117208411-64859180-adf5-11eb-86e6-c87bf4fb4800.png)
+![servergui](https://user-images.githubusercontent.com/56699286/117208684-b0383b00-adf5-11eb-8a1b-b45ce5467b7d.png)
 
 ## Client GUI  
 
