@@ -11,9 +11,12 @@ def startTh(self):
     numOfRooms = self.portInput.text()
     port = 29199
     self.clearDropdown()
-    for i in range(int(numOfRooms)):
+    i =  0
+    while True:
         port += 1
         if self.checkSocket(self.ipInput.text(), port):
+            print(port)
+            self.portList.append(port)
             thread = server.Server(parent=self)
             thread.setParams(self.ipInput.text(), port)
             thread.update.connect(self.updateLogs)
@@ -21,7 +24,10 @@ def startTh(self):
             thread.roomNumber =  i + 1
             self.logsDict[str(i + 1)] = []
             self.threadList.append(thread)
-            self.roomsList.append("ROOM " + str((i + 1)) + " - IP: " + self.ipInput.text() + " - PORT: " + str(port))             
+            self.roomsList.append("ROOM " + str((i + 1)) + " - IP: " + self.ipInput.text() + " - PORT: " + str(port))  
+            i += 1
+        if i == int(numOfRooms):
+            break          
     time.sleep(0.1)
     self.fillDropdown(self.roomsList)
     self.updateLogs()
@@ -36,6 +42,7 @@ def stopTh(self):
     self.logsDict.clear()
     self.logsArea.clear()
     self.logsDict = tmp
+    self.portList.clear()
     self.currentLog = 'general'
     self.roomsDropDown.addItem("General info")
     self.updateLogs()

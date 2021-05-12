@@ -61,7 +61,7 @@ class Client(QThread):
             try:
                 data = self.s.recv(1024)
                 if bytes("LIST:".encode('utf-8')) in data:
-                    self.parent.fillDropdown(data.decode('utf-8'))
+                    self.parent.fillDropdown(data.decode('utf-8'), True)
                 else:
                     if self.receiveFlag:
                         self.playingStream.write(data)
@@ -84,8 +84,8 @@ class Client(QThread):
         self.portNumber = int(portNumber)
 
     def handleServerDis(self):
-        self.parent.updateStatus("Disconnected")
-        self.parent.fillDropdown("")
+        self.parent.updateStatus("Disconnected - start port is 29200.")
+        self.parent.fillDropdown("", False)
         self.parent.startBtnChangeStatus(False)
         self.stop()
 
@@ -102,6 +102,7 @@ class Client(QThread):
             if data == None:
                 return None
             elif "ACK" in data:
+                self.parent.fillDropdown(data, False)
                 return True
             elif "NAK" in data:
                 return False

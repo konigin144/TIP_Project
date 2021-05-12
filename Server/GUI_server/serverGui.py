@@ -145,6 +145,7 @@ class Ui_Dialog(object):
         Ui_Dialog.addLogs = addLogs
 
         self.threadList = []
+        self.portList = []
         self.logsDict = {'general': []}
         self.currentLog = 'general'
         self.isActive = False

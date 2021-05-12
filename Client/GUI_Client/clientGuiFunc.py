@@ -17,8 +17,8 @@ def startTh(self):
     self.thread.start()
 
 def stopTh(self):
-    self.updateStatus("Disconnected")
-    self.thread.stop()
+    self.updateStatus("Disconnected - start port is 29200.")
+    self.thread.stop() 
 
 def updateStatus(self, msg):
     self.usersList[0] = msg
@@ -118,14 +118,25 @@ def handleSpeakerBtn(self):
         self.spkBtn.setIcon(QIcon(self.imgPath + "speaker_on.png"))
         self.spkBtn.setStyleSheet(spkBtnStyle)
 
-def fillDropdown(self, usersString):
-    usersList = usersString[6:].split(" ")
+def fillDropdown(self, content, flag):
+    print(content)
+    if "ACK" in content:
+        if len(content) > 39:
+            content = content[:39] + "\n" + content[39:]     
+            contentList = ["Available ports: [" + content[4:] + "]"]
+    else:
+        contentList = content.split(" ")[1:]
+
     firstElem = self.usersList[0]
+    if flag:
+        secondElem = self.usersList[1]
     self.usersList.clear()
     self.statusBar.clear()
     self.usersList.append(firstElem)
-    if usersList[0] != "":
-        self.usersList += usersList
+    if flag:
+        self.usersList.append(secondElem)
+    
+    self.usersList += contentList
     self.statusBar.addItems(self.usersList)
 
 def preventDropdownChange(self):

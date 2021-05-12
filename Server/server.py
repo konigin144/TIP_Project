@@ -99,7 +99,9 @@ class Server(QThread):
         if "CHECKNICK:" in data:
             if data[11:] not in self.connections.keys():
                 self.connections[data[11:]] = c
-                c.send(b"ACK")
+                msg = ', '.join([str(elem) for elem in self.parent.portList])
+                msg = "ACK " + msg
+                c.send(bytes(msg.encode('utf-8')))
                 return True
             else:
                 c.send(b"NAK")
