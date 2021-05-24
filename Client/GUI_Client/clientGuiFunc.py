@@ -119,11 +119,12 @@ def handleSpeakerBtn(self):
         self.spkBtn.setStyleSheet(spkBtnStyle)
 
 def fillDropdown(self, content, flag):
-    print(content)
+    contentList = []
     if "ACK" in content:
         if len(content) > 39:
             content = content[:39] + "\n" + content[39:]     
-            contentList = ["Available ports: [" + content[4:] + "]"]
+        contentList = ["Available ports: [" + content[4:] + "]"]
+
     else:
         contentList = content.split(" ")[1:]
 
