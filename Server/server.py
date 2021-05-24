@@ -51,7 +51,7 @@ class Server(QThread):
         self.context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
         self.context.load_cert_chain(certfile=self.cert) 
         self.context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1
-        self.context.set_ciphers('AES256+ECDH:AES256+EDH')
+        self.context.set_ciphers('AES256+ECDHE:AES256+EDH')
 
         while True:
             s, addr = self.sock.accept()
@@ -99,7 +99,9 @@ class Server(QThread):
         if "CHECKNICK:" in data:
             if data[11:] not in self.connections.keys():
                 self.connections[data[11:]] = c
-                c.send(b"ACK")
+                msg = ', '.join([str(elem) for elem in self.parent.portList])
+                msg = "ACK " + msg
+                c.send(bytes(msg.encode('utf-8')))
                 return True
             else:
                 c.send(b"NAK")

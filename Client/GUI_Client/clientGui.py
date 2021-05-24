@@ -126,7 +126,7 @@ class Ui_Dialog(object):
         self.statusBar.setStyleSheet(statusBarStyle)
         self.statusBar.setEditable(False)
         self.statusBar.setObjectName("statusBar")
-        self.statusBar.addItem("Please insert below parameters.")
+        self.statusBar.addItem("Please insert below parameters - start port is 29200.")
         self.statusBar.setMaxVisibleItems(11)
         self.statusBar.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.upperLayout.addWidget(self.statusBar, 0, 0, 1, 2)
@@ -192,7 +192,7 @@ class Ui_Dialog(object):
         self.spkBtn.clicked.connect(self.handleSpeakerBtn)
         self.statusBar.currentIndexChanged.connect(self.preventDropdownChange)
 
-        self.usersList = ["Please insert below parameters."]
+        self.usersList = ["Please insert below parameters - start port is 29200."]
 
         self.initClient()
 
